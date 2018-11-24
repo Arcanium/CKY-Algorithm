@@ -6,15 +6,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CKY_Algorithm
+namespace CYK_Algorithm
 {
     class Program
     {
         static void Main(string[] args)
         {
             StreamReader streamReader = new StreamReader("input.txt");
-            string line = streamReader.ReadLine();
-            Debug.WriteLine("my boyfren?");
+            string sentence = streamReader.ReadLine();
+            GrammarCreator grammarCreator = new GrammarCreator();
+            Dictionary<string, List<string>> grammars = grammarCreator.CreateGrammar(streamReader);
+
+            CYKAlgorithm.ParseGrammar(sentence, grammars);
         }
     }
 }
