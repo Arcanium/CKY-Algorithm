@@ -33,22 +33,22 @@ namespace CYK_Algorithm
                     });
 
                     if (terminalMatchFound && !CYKResults[i, 0].Contains(grammar.Key))
-                        CYKResults[i, 0].Add(grammar.Key);
+                        CYKResults[0, i].Add(grammar.Key);
                 }
             }
 
             //Non-terminals.
-            for (int i = 0; i < sentencePieces.Length; i++) //i and j traverse the matrix, following the CYK path.
+            for (int i = 1; i < sentencePieces.Length; i++) //i and j traverse the matrix, following the CYK path.
             {
-                for (int j = 1; j < sentencePieces.Length - i; j++)
+                for (int j = 0; j < sentencePieces.Length - i; j++)
                 {
-                    int firstIndex = i + 1;
-                    int secondIndex = j - 1;
+                    int firstIndex = i - 1;
+                    int secondIndex = j + 1;
 
-                    for (int k = 0; k < j; k++) //k is used to traverse which two items to check for the grammar.
+                    for (int k = 0; k < i; k++) //k is used to traverse which two items to check for the grammar.
                     {
-                        List<string> result1 = new List<string>(CYKResults[i, k]); //To remove the existing reference from the result to the CYK (it was messing up the lambda foreach).
-                        List<string> result2 = new List<string>(CYKResults[firstIndex++, secondIndex--]);
+                        List<string> result1 = new List<string>(CYKResults[k, j]); //To remove the existing reference from the result to the CYK (it was messing up the lambda foreach).
+                        List<string> result2 = new List<string>(CYKResults[firstIndex--, secondIndex++]);
 
                         foreach (KeyValuePair<string, List<string>> grammar in grammars)
                         {
@@ -69,15 +69,6 @@ namespace CYK_Algorithm
             }
         }
 
-        private static void ParseTerminal()
-        {
-
-        }
-
-        private static void ParseNonTerminal()
-        {
-
-        }
 
     }
 }
