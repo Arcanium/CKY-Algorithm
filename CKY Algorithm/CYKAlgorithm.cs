@@ -9,7 +9,7 @@ namespace CYK_Algorithm
 {
     static class CYKAlgorithm
     {
-        public static void ParseGrammar(string sentence, Dictionary<string, List<string>> grammars)
+        public static List<string>[,] ParseGrammar(string sentence, Dictionary<string, List<string>> grammars)
         {
             string[] sentencePieces = sentence.ToLower().Split(' ');
 
@@ -67,8 +67,35 @@ namespace CYK_Algorithm
                     }
                 }
             }
+            return CYKResults;
         }
 
+        public static void PrintCYKResults(List<string>[,] CYKResults, string sentence)
+        {
+            string[] sentencePieces = sentence.Split(' ');
+            for (int i = 0; i < sentencePieces.Length; i++)
+                for (int j = 0; j < sentencePieces.Length - i; j++)
+                {
+                    int wordsToTraverse = i;
+                    int iterator = 0;
+                    while (wordsToTraverse >= 0)
+                    {
+                        Console.Write(sentencePieces[j + iterator] + " ");
+                        wordsToTraverse--;
+                        iterator++;
+                    }
+                    
+                    Console.Write("- is produced with: ");
 
+                    if (CYKResults[i, j].Count > 0)
+                        CYKResults[i, j].ForEach(result =>
+                        {
+                            Console.Write(result + " ");
+                        });
+                    else
+                        Console.Write("Nothing");
+                    Console.Write("\n");
+                }
+        }
     }
 }

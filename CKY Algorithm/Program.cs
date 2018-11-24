@@ -17,8 +17,8 @@ namespace CYK_Algorithm
             GrammarCreator grammarCreator = new GrammarCreator();
             Dictionary<string, List<string>> grammars = grammarCreator.CreateGrammar(streamReader);
 
-            CYKAlgorithm.ParseGrammar(sentence, grammars);
-            //Print and we're done.
+            List<string>[,] results = CYKAlgorithm.ParseGrammar(sentence, grammars);
+            CYKAlgorithm.PrintCYKResults(results, sentence);
         }
     }
 }
